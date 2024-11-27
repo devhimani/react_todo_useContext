@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Todo = () => {
   const [input, setInput] = useState("");
@@ -12,7 +13,9 @@ const Todo = () => {
   };
   return (
     <div>
+      <Link to="/">Home</Link>
       <h1> Todo page</h1>
+
       <div>
         <form onSubmit={handleSubmit}>
           <input
