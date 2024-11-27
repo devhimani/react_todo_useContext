@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { TodoStore } from "../store/index.jsx";
 
 const Todo = () => {
+  const { todos, setTodos } = useContext(TodoStore);
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

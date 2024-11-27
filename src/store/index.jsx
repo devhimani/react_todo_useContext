@@ -1,12 +1,15 @@
 import { createContext } from "react";
+import { useState } from "react";
 
 export const TodoStore = createContext(null);
 
 const StoreProvider = ({ children }) => {
-  const name = "Himani";
-  const email = "hg@gmail.com";
+  const [todos, setTodos] = useState([]);
+
   return (
-    <TodoStore.Provider value={{ name, email }}>{children}</TodoStore.Provider>
+    <TodoStore.Provider value={{ todos, setTodos }}>
+      {children}
+    </TodoStore.Provider>
   );
 };
 
