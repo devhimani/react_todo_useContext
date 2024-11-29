@@ -1,0 +1,14 @@
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-checkbox {
+  display: flex;
+}
+
+.done {
+  text-decoration: line-through;
+  color: purple;
+  opacity: 0.5;
+}
