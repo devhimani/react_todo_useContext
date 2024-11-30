@@ -21,23 +21,23 @@ const Todo = () => {
     console.log("form submitted");
   };
 
-  const handleDelete = (clickedIndex) => {
-    setTodos(todos.filter((_todo, index) => clickedIndex !== index));
+  const handleDelete = (todoId) => {
+    setTodos(todos.filter((todo) => todoId !== todo.id));
   };
 
-  const handleUpdateTodo = (clickedIndex) => {
+  const handleUpdateTodo = (todoId) => {
     setTodos(
-      todos.map((todo, index) =>
-        clickedIndex === index ? { ...todo, name: newInput } : todo
+      todos.map((todo) =>
+        todoId === todo.id ? { ...todo, name: newInput } : todo
       )
     );
     setEditIndex(null);
   };
 
-  const handleDone = (clickedIndex) => {
+  const handleDone = (todoId) => {
     setTodos(
-      todos.map((todo, index) =>
-        clickedIndex === index
+      todos.map((todo) =>
+        todoId === todo.id
           ? { ...todo, isCheckCompleted: !todo.isCheckCompleted }
           : todo
       )
@@ -59,48 +59,101 @@ const Todo = () => {
           <button>Add</button>
         </form>
         <div>
+          <h2> Pending Task</h2>
           <ul>
-            {todos.map((todo, index) => (
-              <li key={index} className="todo-item">
-                {editIndex === index ? (
-                  <input
-                    type="text"
-                    value={newInput}
-                    onChange={(e) => setNewInput(e.target.value)}
-                  />
-                ) : (
-                  <div
-                    className={`todo-checkbox ${
-                      todo.isCheckCompleted ? "done" : ""
-                    }`}
-                  >
+            {todos
+              .filter((todo) => !todo.isCheckCompleted)
+              .map((todo) => (
+                <li key={todo.id} className="todo-item">
+                  {editIndex === todo.id ? (
                     <input
-                      type="checkbox"
-                      checked={todo.isCheckCompleted}
-                      onChange={() => handleDone(index)}
+                      type="text"
+                      value={newInput}
+                      onChange={(e) => setNewInput(e.target.value)}
                     />
-                    <p>{todo.name}</p>
-                  </div>
-                )}
-                <div>
-                  {editIndex === index ? (
-                    <button onClick={() => handleUpdateTodo(index)}>
-                      Update
-                    </button>
                   ) : (
-                    <button
-                      onClick={() => {
-                        setEditIndex(index);
-                        setNewInput(todo.name);
-                      }}
+                    <div
+                      className={`todo-checkbox ${
+                        todo.isCheckCompleted ? "done" : ""
+                      }`}
                     >
-                      Edit
-                    </button>
+                      <input
+                        type="checkbox"
+                        checked={todo.isCheckCompleted}
+                        onChange={() => handleDone(todo.id)}
+                      />
+                      <p>{todo.name}</p>
+                    </div>
                   )}
-                  <button onClick={() => handleDelete(index)}>Delete</button>
-                </div>
-              </li>
-            ))}
+                  <div>
+                    {editIndex === todo.id ? (
+                      <button onClick={() => handleUpdateTodo(todo.id)}>
+                        Update
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditIndex(todo.id);
+                          setNewInput(todo.name);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    <button onClick={() => handleDelete(todo.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+          </ul>
+          <h2> Completed Task</h2>
+          <ul>
+            {todos
+              .filter((todo) => todo.isCheckCompleted)
+              .map((todo) => (
+                <li key={todo.id} className="todo-item">
+                  {editIndex === todo.id ? (
+                    <input
+                      type="text"
+                      value={newInput}
+                      onChange={(e) => setNewInput(e.target.value)}
+                    />
+                  ) : (
+                    <div
+                      className={`todo-checkbox ${
+                        todo.isCheckCompleted ? "done" : ""
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={todo.isCheckCompleted}
+                        onChange={() => handleDone(todo.id)}
+                      />
+                      <p>{todo.name}</p>
+                    </div>
+                  )}
+                  <div>
+                    {editIndex === todo.id ? (
+                      <button onClick={() => handleUpdateTodo(todo.id)}>
+                        Update
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditIndex(todo.id);
+                          setNewInput(todo.name);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    <button onClick={() => handleDelete(todo.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
